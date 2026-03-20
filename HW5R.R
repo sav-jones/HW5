@@ -1,0 +1,26 @@
+library(ggplot2)
+library(dplyr)
+library(maps)
+
+states <- map_data("state")
+
+california <- states %>%
+  filter(region == "california")
+
+load("C:/Users/Sav/Desktop/Classes/DATA VIZ/DATA-20260125T234113Z-1-001/DATA/wind_turbines.rda")
+wind_ca <- wind_turbines %>%
+  filter(t_state == "CA")
+
+colnames(wind_turbines)
+
+ggplot() +
+  geom_polygon(data = california,
+               aes(x = long, y = lat, group = group),
+               fill = "white",
+               color = 'black') +
+  geom_point(data = wind_ca,
+             aes(x = xlong, y = ylat),
+             color ='red',
+             size = 1) +
+  coord_fixed(1.3) +
+  guides(fill = "none")
